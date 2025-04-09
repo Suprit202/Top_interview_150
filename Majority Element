@@ -1,0 +1,64 @@
+class Solution {
+public:
+    int majorityElement(vector<int>& nums) 
+    {
+        map<int,int>mp;
+        for(int i = 0; i < nums.size(); i++)
+        {
+            mp[nums[i]]++;
+        }
+
+        for(auto it:mp)
+        {
+            if(it.second > (nums.size()/2))
+            {
+                return it.first;
+            }
+        }
+
+        return -1;
+    }
+};  //We use Hash_map here but it's not the optimized approch as we can see, here the TC is O(nlogN + N )
+
+
+//Moore's Algo (More Optimize Approch)
+class Solution {
+public:
+    int majorityElement(vector<int>& nums) 
+    {
+       int ptr;
+       int count = 0;
+
+       for(int i = 0; i < nums.size(); i++)
+       {
+            if(count == 0)
+            {
+                ptr = nums[i];
+                count++;
+            }
+            else if(ptr == nums[i])
+            {
+                count++;
+            }
+            else
+            {
+                count--;
+            }
+       }
+
+       for(int i = 0; i< nums.size(); i++)
+       {
+            if(ptr == nums[i])
+            {
+                count++;
+            }
+       }
+
+       if(count > (nums.size()/2))
+       {
+            return ptr;
+       }
+
+       return -1;
+    }
+}; //it TC is O(N)
