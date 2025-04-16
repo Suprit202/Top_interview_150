@@ -1,0 +1,45 @@
+class Solution {
+public:
+    int hIndex(vector<int>& citations) 
+    {
+        int h = 0;
+
+        for(int i = 0; i < citations.size(); i++)
+        {
+            int temp = 0;
+
+            for(int j = 0; j < citations.size(); j++)
+            {
+                if((i+1) <= citations[j])
+                {
+                    temp++;
+                }
+            }
+
+            if(temp >= i+1)
+            {
+                h++;
+            }
+            else
+            {
+                return h;
+            }
+        }
+        return h;
+    }
+}; //5ms; TC:O(N^2)
+
+
+class Solution {   //O(N)
+public:
+    int hIndex(vector<int>& v) {
+        sort(v.begin(), v.end(), greater<int>());
+        int i;
+        for(i = 0;i< v.size();i++){
+            if(v[i] < i+1){
+                break;
+            }
+        }
+        return i;
+    }
+};
