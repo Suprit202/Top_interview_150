@@ -1,0 +1,46 @@
+class Solution {
+public:
+    int candy(vector<int>& ratings) 
+    {
+        int n = ratings.size();
+        int totalCandies = n;
+        int i = 1;
+
+        while( i < n )
+        {
+            if(ratings[i] == ratings[i-1])
+            {
+                i++;
+                continue;
+            }
+
+            int curPeak = 0;
+            while ( i<n && ratings[i] > ratings[i-1])
+            {
+                curPeak++;
+                totalCandies += curPeak;
+                i++;
+            }
+
+
+            if( i==n )
+            {
+                return totalCandies;
+            }
+
+
+            int curVally = 0;
+            while ( i<n && ratings[i] < ratings[i-1])
+            {
+                curVally++;
+                totalCandies += curVally;
+                i++;
+            }
+
+
+            totalCandies -= min(curVally, curPeak);
+        }    
+
+        return totalCandies;    
+    }
+};
