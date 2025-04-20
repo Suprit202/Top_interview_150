@@ -1,0 +1,38 @@
+class Solution {
+public:
+    int charToSum(char a)
+    {
+        switch(a)
+        {
+            case 'I': return 1;
+            case 'V': return 5;
+            case 'X': return 10;
+            case 'L': return 50;
+            case 'C': return 100;
+            case 'D': return 500;
+            case 'M': return 1000;
+        }
+
+        return a;
+    }
+
+
+    int romanToInt(string s) 
+    {
+        int res = 0;
+
+        for(int i = 0; i<s.length(); i++)
+        {
+            if(i+1 < s.length() && charToSum(s[i]) < charToSum(s[i+1]))
+            {
+                res -= charToSum(s[i]);
+            }
+            else
+            {
+                res += charToSum(s[i]);
+            }
+        }
+
+        return res;       
+    }
+};
