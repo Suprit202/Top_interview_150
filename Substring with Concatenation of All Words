@@ -1,53 +1,62 @@
 class Solution {
 public:
-    vector<int> findSubstring(string s, vector<string>& words) {
+    vector<int> findSubstring(string s, vector<string>& words) 
+    {
         if (words.empty() || s.empty()) return {};
         
-        unordered_map<string, int> wordCount;
-        for (const string& word : words) {
-            wordCount[word]++;
+        unordered_map<string,int> freq;
+        for(string& word: words)
+        {
+            freq[word]++;
         }
-        
-        int wordLength = words[0].size();
-        int totalWords = words.size();
-        int windowSize = wordLength * totalWords;
-        int strLength = s.size();
-        vector<int> result;
-        
-        for (int i = 0; i < wordLength; i++) {
-            int left = i;
+
+        int len = s.size();
+        int n = words.size();
+        int wordSize = words[0].size();
+        int windowSize = wordSize * n;
+        vector<int> ans;
+
+        for(int startPos = 0; startPos < wordSize; startPos++)
+        {
+            unordered_map<string,int> curr;
             int count = 0;
-            unordered_map<string, int> currentMap;
+            int left = startPos;
             
-            for (int j = i; j <= strLength - wordLength; j += wordLength) {
-                string word = s.substr(j, wordLength);
+            for(int j = startPos; j <= len - wordSize; j += wordSize)
+            {
+                string currWord = s.substr(j, wordSize);
                 
-                if (wordCount.find(word) != wordCount.end()) {
-                    currentMap[word]++;
+                if(freq.count(currWord))
+                {
+                    curr[currWord]++;
                     count++;
                     
-                    while (currentMap[word] > wordCount[word]) {
-                        string leftWord = s.substr(left, wordLength);
-                        currentMap[leftWord]--;
+                    while(curr[currWord] > freq[currWord])
+                    {
+                        string leftWord = s.substr(left, wordSize);
+                        curr[leftWord]--;
                         count--;
-                        left += wordLength;
+                        left += wordSize;
                     }
                     
-                    if (count == totalWords) {
-                        result.push_back(left);
-                        string leftWord = s.substr(left, wordLength);
-                        currentMap[leftWord]--;
+                    if(count == n)
+                    {
+                        ans.push_back(left);
+                        string leftWord = s.substr(left, wordSize);
+                        curr[leftWord]--;
                         count--;
-                        left += wordLength;
+                        left += wordSize;
                     }
-                } else {
-                    currentMap.clear();
+                }
+                else
+                {
+                    curr.clear();
                     count = 0;
-                    left = j + wordLength;
+                    left = j + wordSize;
                 }
             }
         }
-        
-        return result;
+
+        return ans;
     }
 };
