@@ -20,3 +20,38 @@ public:
         return check;
     }
 };
+
+//Two Pointer Approch
+class Solution {
+public:
+    bool isPalindrome(string s) {
+        int start = 0;
+        int end = s.length()-1;
+        int check = 1;
+
+        while(start<end)
+        {
+            if(!isalnum(s[start])){
+                start++;
+                continue;
+            }
+
+            if(!isalnum(s[end])){
+                end--;
+                continue;
+            }
+
+            if(tolower(s[start]) != tolower(s[end]))
+            {
+                check = 0;
+                break;
+            }
+            else{
+                start++;
+                end--;
+            }
+        }
+
+        return check;
+    }
+};
