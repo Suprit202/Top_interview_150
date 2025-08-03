@@ -1,0 +1,22 @@
+class Solution {
+public:
+    bool isPalindrome(string s) {
+        string s1 = "";
+        bool check = 0;
+
+
+        for(auto chr : s){
+            if(isalnum(chr)){
+                s1.push_back(tolower(chr));
+            }
+        }
+
+        string rev = s1;
+
+        reverse(rev.begin(),rev.end());
+
+        if(s1 == rev) check = 1;
+
+        return check;
+    }
+};
